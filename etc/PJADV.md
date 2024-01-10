@@ -366,7 +366,7 @@ struct PAJ_FontData_List_Node
 
 里面有两个关键成员 ，一个是hfont和hdc(CreateCompatibleDC)
 
-但hfont通过PAJ::Font::Create创建，该函数有两个参数，一个是字体类型，一个字体大小
+但hfont通过PAJ::Font::Create创建，该函数有两个参数，一个是字体类型，一个字体大小(注意这个大小，可能会造成间距过小，要把这个大小调低，因为fontdata传递的大小可能不一定适合gdi)
 
 字体类型1，2，3，4调用GDI的CreateFontIndirectA创建字体，大于这个类型就不创建hfont
 

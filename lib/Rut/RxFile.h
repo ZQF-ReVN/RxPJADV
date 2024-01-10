@@ -46,7 +46,7 @@ namespace Rut::RxFile
 		size_t GetSize();
 		size_t SetPos(size_t nOffset, size_t nMode = RIO_BEGIN);
 		size_t Read(void* pBuffer, size_t nSize);
-		size_t Write(void* pData, size_t nSize);
+		size_t Write(const void* pData, size_t nSize);
 
 	};
 }

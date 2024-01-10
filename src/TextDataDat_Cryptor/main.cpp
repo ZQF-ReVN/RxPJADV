@@ -6,7 +6,6 @@
 #include "../../lib/Rut/RxFile.h"
 #include "../../lib/PJADV/Bin.h"
 
-
 static void DebugMain()
 {
 	Rut::RxMem::Auto text_data_mem{ "textdata.bin" };

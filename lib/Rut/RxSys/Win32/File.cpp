@@ -116,7 +116,7 @@ namespace Rut::RxSys
 		return (status) ? ((size_t)read) : (0);
 	}
 
-	size_t FileWrite(void* hFile, void* pData, size_t nSize)
+	size_t FileWrite(void* hFile, const void* pData, size_t nSize)
 	{
 		DWORD write = 0;
 		const BOOL status = ::WriteFile((HANDLE)hFile, pData, (DWORD)nSize, &write, nullptr);

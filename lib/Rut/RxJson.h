@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <filesystem>
 #include <unordered_map>
 
 
@@ -144,10 +145,10 @@ namespace Rut::RxJson
 		void ParseValue(JValue& rfJValue);
 
 	public:
-		void Open(std::wstring_view wsJsonPath);
+		void Open(const std::filesystem::path& phJson);
 		bool Read(JValue& rfJValue);
-		bool Load(std::wstring_view wsJsonPath, JValue& rfJValue);
-		JValue Load(std::wstring_view wsJsonPath);
-		static void Save(const JValue& rfJVaue, std::wstring_view wsFileName, bool isFormat = false, bool isOrder = false);
+		bool Load(const std::filesystem::path& phJson, JValue& rfJValue);
+		JValue Load(const std::filesystem::path& phJson);
+		static void Save(const JValue& rfJVaue, const std::filesystem::path& phJson, bool isFormat = false, bool isOrder = false);
 	};
 }

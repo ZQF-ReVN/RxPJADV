@@ -6,18 +6,10 @@
 
 static void DebugMain()
 {
-	PJADV::Bin::TextDataDat text_data_dat;
-	text_data_dat.Load("textdata.bin");
-
-	std::vector<std::wstring> text_list;
-	text_data_dat.MakeList(text_list, 932);
-
-	Rut::RxFile::Text ofs_text{ "1.txt",Rut::RIO_WRITE,Rut::RFM_UTF8 };
-	ofs_text.WriteAllLine(text_list);
-
-	const char* str_ptr = text_data_dat[0x4C];
-
-	int a = 0;
+	PJADV::Bin::TextDataDat textdata_dat("textdata.bin");
+	std::string x = "123";
+	textdata_dat.AddText(std::move(x));
+	textdata_dat.Save("1.bin");
 }
 
 

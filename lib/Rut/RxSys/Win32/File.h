@@ -15,5 +15,5 @@ namespace Rut::RxSys
 	size_t FileSetPtr(void* hFile, size_t nPos, size_t nWay);
 	size_t FileGetPtr(void* hFile);
 	size_t FileRead(void* hFile, void* pBuffer, size_t nSize);
-	size_t FileWrite(void* hFile, void* pData, size_t nSize);
+	size_t FileWrite(void* hFile, const void* pData, size_t nSize);
 }

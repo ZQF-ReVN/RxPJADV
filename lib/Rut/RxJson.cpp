@@ -726,10 +726,10 @@ namespace Rut::RxJson
 	}
 
 
-	void Parser::Open(std::wstring_view wsJsonPath)
+	void Parser::Open(const std::filesystem::path& phJson)
 	{
 		std::wstring json_text;
-		RxFile::Text{ wsJsonPath, RIO_READ, RFM_UTF8 }.ReadRawText(json_text);
+		RxFile::Text{ phJson, RIO_READ, RFM_UTF8 }.ReadRawText(json_text);
 
 		this->m_nJsonCCH = json_text.size();
 		this->m_nReadCCH = 0;
@@ -745,23 +745,23 @@ namespace Rut::RxJson
 		return (this->GeReadCCH() >= this->GetJsonCCH()) ? (true) : (false);
 	}
 
-	bool Parser::Load(std::wstring_view wsJsonPath, JValue& rfJValue)
+	bool Parser::Load(const std::filesystem::path& phJson, JValue& rfJValue)
 	{
-		this->Open(wsJsonPath);
+		this->Open(phJson);
 		return this->Read(rfJValue);
 	}
 
-	JValue Parser::Load(std::wstring_view wsJsonPath)
+	JValue Parser::Load(const std::filesystem::path& phJson)
 	{
 		JValue json;
-		this->Load(wsJsonPath, json);
+		this->Load(phJson, json);
 		return json;
 	}
 
-	void Parser::Save(const JValue& rfJVaue, std::wstring_view wsFileName, bool isFormat, bool isOrder)
+	void Parser::Save(const JValue& rfJVaue, const std::filesystem::path& phJson, bool isFormat, bool isOrder)
 	{
 		std::wstring text;
 		rfJVaue.Dump(text, isFormat, isOrder);
-		RxFile::Text{ wsFileName ,RIO_WRITE, RFM_UTF8 }.WriteLine(text);
+		RxFile::Text{ phJson ,RIO_WRITE, RFM_UTF8 }.WriteLine(text);
 	}
 }

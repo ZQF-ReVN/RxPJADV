@@ -70,7 +70,7 @@ namespace Rut::RxFile
 		return RxSys::FileRead(m_hFile, pBuffer, nSize);
 	}
 
-	size_t Basic::Write(void* pData, size_t nSize)
+	size_t Basic::Write(const void* pData, size_t nSize)
 	{
 		return RxSys::FileWrite(m_hFile, pData, nSize);
 	}
