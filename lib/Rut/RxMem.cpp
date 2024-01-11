@@ -124,6 +124,15 @@ namespace Rut::RxMem
 		return *this;
 	}
 
+	uint8_t* Auto::begin() const noexcept
+	{
+		return this->GetPtr();
+	}
+
+	uint8_t* Auto::end() const noexcept
+	{
+		return this->GetPtr() + this->GetSize();
+	}
 
 	void Auto::SaveData(const std::filesystem::path& phPath)
 	{

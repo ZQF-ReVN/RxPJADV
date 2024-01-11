@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <span>
 #include <vector>
 #include <filesystem>
 
@@ -32,8 +33,7 @@ namespace PJADV::Bin
 		const std::string& operator[](size_t nOffset);
 
 	public:
-		static void XorBytes(Rut::RxMem::Auto& amMem, uint8_t ucKey);
-		static void XorBytes(uint8_t* pData, size_t nSize, uint8_t ucKey);
+		static void XorBytes(std::span<uint8_t> spData, uint8_t ucKey);
 	};
 
 }

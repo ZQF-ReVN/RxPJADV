@@ -97,16 +97,11 @@ namespace PJADV::Bin
 		return m_vcTextData.operator[](index);
 	}
 
-	void TextDataDat::XorBytes(Rut::RxMem::Auto& amMem, uint8_t ucKey)
+	void TextDataDat::XorBytes(std::span<uint8_t> spData, uint8_t ucKey)
 	{
-		TextDataDat::XorBytes(amMem.GetPtr(), amMem.GetSize(), 0xC5);
-	}
-
-	void TextDataDat::XorBytes(uint8_t* pData, size_t nSize, uint8_t ucKey)
-	{
-		for (auto ite_byte : std::views::iota(0u, nSize))
+		for (auto& ite_byte : spData)
 		{
-			pData[ite_byte] ^= ucKey;
+			ite_byte ^= ucKey;
 			ucKey += 0x5C;
 		}
 	}

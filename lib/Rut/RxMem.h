@@ -42,6 +42,9 @@ namespace Rut::RxMem
 		Auto& operator=(const Auto& rfAutoMem);
 		Auto& operator+(const Auto& rfAutoMem);
 
+		uint8_t* begin() const noexcept;
+		uint8_t* end() const noexcept;
+
 	public:
 		void SaveData(const std::filesystem::path& phPath);
 		void LoadFile(const std::filesystem::path& phPath, size_t nSize = AUTO_MEM_AUTO_SIZE);
