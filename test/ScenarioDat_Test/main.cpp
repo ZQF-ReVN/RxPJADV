@@ -4,7 +4,7 @@
 #include "../../lib/PJADV/Bin.h"
 
 
-static void DebugMain()
+int main()
 {
 	uint32_t uix = 0x6e64;
 	auto e = (((uix + 7) >> 3) + 3) & 0xFFFFFFFC;
@@ -13,21 +13,6 @@ static void DebugMain()
 	scn_dat.ShowCommand(0x80000307);
 
 	int a = 0;
-}
-
-
-int main()
-{
-	::DebugMain();
-
-	try
-	{
-
-	}
-	catch (const std::runtime_error& err)
-	{
-		std::cerr << err.what() << std::endl;
-	}
 }
 
 

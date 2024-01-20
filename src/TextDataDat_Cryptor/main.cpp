@@ -1,10 +1,29 @@
-﻿#include <ranges>
-#include <iostream>
-#include <filesystem>
+﻿#include <iostream>
 
+#include "../../lib/Rut/RxCmd.h"
 #include "../../lib/Rut/RxMem.h"
-#include "../../lib/Rut/RxFile.h"
 #include "../../lib/PJADV/Bin.h"
+
+
+static void UserMain(int argc, wchar_t* argv[])
+{
+	try
+	{
+		Rut::RxCmd::Parser cmd;
+		cmd.AddCmd(L"-bin", L"textdata file path");
+		cmd.AddCmd(L"-out", L"xor file save path");
+		cmd.AddExample(L"-bin textdata.bin -out textdata.bin.dec");
+		if (cmd.Load(argc, argv) == false) { return; }
+
+		Rut::RxMem::Auto text_data_mem{ cmd.GetValue(L"-bin") };
+		PJADV::Bin::TextDataDat::XorBytes(text_data_mem, 0xC5);
+		text_data_mem.SaveData(cmd.GetValue(L"-out"));
+	}
+	catch (const std::runtime_error& err)
+	{
+		std::cerr << err.what() << std::endl;
+	}
+}
 
 static void DebugMain()
 {
@@ -14,18 +33,9 @@ static void DebugMain()
 }
 
 
-int main()
+int wmain(int argc, wchar_t* argv[])
 {
-	::DebugMain();
-
-	try
-	{
-
-	}
-	catch (const std::runtime_error& err)
-	{
-		std::cerr << err.what() << std::endl;
-	}
+	::UserMain(argc, argv);
 }
 
 
