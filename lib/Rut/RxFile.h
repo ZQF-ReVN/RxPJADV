@@ -63,7 +63,7 @@ namespace Rut::RxFile
 	public:
 		template <class T> Binary& operator >>(T&& rfOBJ);
 		template <class T> Binary& operator <<(T&& rfOBJ);
-		template <class T, size_t nSize = sizeof(T)> T ReadViaType();
+		template <class T, size_t nSize = sizeof(T)> T Get();
 	};
 
 	template <class T> Binary& Binary::operator >>(T&& rfOBJ)
@@ -78,7 +78,7 @@ namespace Rut::RxFile
 		return *this;
 	}
 
-	template <class T, size_t nSize> T Binary::ReadViaType()
+	template <class T, size_t nSize> T Binary::Get()
 	{
 		T tmp_obj;
 		this->Read((void*)&tmp_obj, nSize);

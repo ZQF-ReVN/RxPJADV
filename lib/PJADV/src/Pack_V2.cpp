@@ -12,18 +12,18 @@ namespace PJADV::Pack
 	{
 		Rut::RxFile::Binary ifs{ phPackPath, Rut::RIO_READ };
 
-		PAJ_Pack_HDR_Info hdr_info = ifs.ReadViaType<PAJ_Pack_HDR_Info>();
+		PAJ_Pack_HDR_Info hdr_info = ifs.Get<PAJ_Pack_HDR_Info>();
 		std::vector<PAJ_Pack_File_Name> file_name_list;
 		std::vector<PAJ_Pack_File_Info> file_info_list;
 
 		for (auto ite : std::views::iota(0u, hdr_info.uiFileCount))
 		{
-			file_name_list.emplace_back(ifs.ReadViaType<PAJ_Pack_File_Name>());
+			file_name_list.emplace_back(ifs.Get<PAJ_Pack_File_Name>());
 		}
 
 		for (auto ite : std::views::iota(0u, hdr_info.uiFileCount))
 		{
-			file_info_list.emplace_back(ifs.ReadViaType<PAJ_Pack_File_Info>());
+			file_info_list.emplace_back(ifs.Get<PAJ_Pack_File_Info>());
 		}
 
 		Rut::RxMem::Auto buffer;

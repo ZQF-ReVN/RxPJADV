@@ -22,15 +22,15 @@ namespace PJADV::Bin
 	{
 		Rut::RxFile::Binary ifs{ phFileNameBin, Rut::RIO_READ };
 
-		std::array<uint8_t, 12> signature = ifs.ReadViaType<std::array<uint8_t, 12>>();
+		std::array<uint8_t, 12> signature = ifs.Get<std::array<uint8_t, 12>>();
 		if (memcmp(signature.data(), "PJADV_FL0001", 12)) { throw std::runtime_error("FileNameDat::Load: Unknow File Format!"); }
 
-		uint32_t entry_count = ifs.ReadViaType<uint32_t>();
+		uint32_t entry_count = ifs.Get<uint32_t>();
 
 		std::array<char, 32> file_name_buffer;
 		for (auto ite_entry : std::views::iota(0u, entry_count))
 		{
-			file_name_buffer = ifs.ReadViaType<std::array<char, 32>>();
+			file_name_buffer = ifs.Get<std::array<char, 32>>();
 			m_vcName.emplace_back(file_name_buffer.data());
 		}
 	}
