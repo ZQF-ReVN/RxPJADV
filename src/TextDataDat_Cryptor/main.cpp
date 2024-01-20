@@ -11,7 +11,7 @@ static void UserMain(int argc, wchar_t* argv[])
 	{
 		Rut::RxCmd::Parser cmd;
 		cmd.AddCmd(L"-bin", L"textdata file path");
-		cmd.AddCmd(L"-out", L"xor file save path");
+		cmd.AddCmd(L"-out", L"textdata save path");
 		cmd.AddExample(L"-bin textdata.bin -out textdata.bin.dec");
 		if (cmd.Load(argc, argv) == false) { return; }
 

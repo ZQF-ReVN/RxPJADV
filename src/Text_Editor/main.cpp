@@ -143,10 +143,10 @@ static void UserMain(int argc, wchar_t* argv[])
 	try
 	{
 		Rut::RxCmd::Parser cmd;
-		cmd.AddCmd(L"-textdata", L"textdata file path");
-		cmd.AddCmd(L"-scenario", L"scenario file path");
-		cmd.AddCmd(L"-json_msg", L"msg json file path");
-		cmd.AddCmd(L"-json_seq", L"msg json file path");
+		cmd.AddCmd(L"-textdata", L"textdata path");
+		cmd.AddCmd(L"-scenario", L"scenario path");
+		cmd.AddCmd(L"-json_msg", L"msg json path");
+		cmd.AddCmd(L"-json_seq", L"seq json path");
 		cmd.AddCmd(L"-codepage", L"codepage");
 		cmd.AddCmd(L"-workmode", L"mode [export]:export texts, [import]:import texts");
 		cmd.AddExample(L"-workmode export -textdata textdata.bin -scenario scenario.dat -json_msg scenario_msg.json -json_seq scenario_seq.json -codepage 932");
