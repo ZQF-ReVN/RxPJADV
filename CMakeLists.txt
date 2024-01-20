@@ -28,8 +28,10 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_LIST_DIR}/.out/lib)
 
 # Project
     add_subdirectory("src/Pack_V2_Editor")
-    add_subdirectory("src/FileNameDat_Test")
-    add_subdirectory("src/ScenarioDat_Test")
-    add_subdirectory("src/TextDataDat_Test")
     add_subdirectory("src/TextDataDat_Cryptor")
     add_subdirectory("src/Text_Editor")
+
+# Test
+    add_subdirectory("test/FileNameDat_Test")
+    add_subdirectory("test/ScenarioDat_Test")
+    add_subdirectory("test/TextDataDat_Test")
