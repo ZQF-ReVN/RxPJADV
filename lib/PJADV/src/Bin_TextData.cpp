@@ -1,4 +1,4 @@
-#include "Bin_TextData.h"
+ #include "Bin_TextData.h"
 #include "../../Rut/RxStr.h"
 #include "../../Rut/RxFile.h"
 
@@ -72,21 +72,21 @@ namespace PJADV::Bin
 		m_mpOffsetToIndex[m_nEndOffset] = m_nEndIndex;
 	}
 
-	size_t TextDataDat::AddText(std::string&& msText)
+	uint32_t TextDataDat::AddText(std::string&& msText)
 	{
 		m_vcTextData.emplace_back(std::move(msText));
 		this->MapNext();
-		return m_nEndOffset;
+		return (uint32_t)m_nEndOffset;
 	}
 
-	size_t TextDataDat::AddText(const std::string& msText)
+	uint32_t TextDataDat::AddText(const std::string& msText)
 	{
 		m_vcTextData.emplace_back(msText);
 		this->MapNext();
-		return m_nEndOffset;
+		return (uint32_t)m_nEndOffset;
 	}
 
-	size_t TextDataDat::AddText(std::wstring_view wsText, size_t nCodePage)
+	uint32_t TextDataDat::AddText(std::wstring_view wsText, size_t nCodePage)
 	{
 		return this->AddText(Rut::RxStr::ToMBCS(wsText, nCodePage));
 	}

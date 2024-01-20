@@ -142,7 +142,7 @@ static void UserMain(int argc, wchar_t* argv[])
 {
 	try
 	{
-		Rut::RxCmd::Parser cmd;
+		Rut::RxCmd::Arg cmd;
 		cmd.AddCmd(L"-textdata", L"textdata path");
 		cmd.AddCmd(L"-scenario", L"scenario path");
 		cmd.AddCmd(L"-json_msg", L"msg json path");

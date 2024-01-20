@@ -4,24 +4,7 @@
 #include <unordered_map>
 
 
-namespace Rut::RxCmd
-{
-	bool Alloc(const wchar_t* lpTitle, bool isEdit = false);
-}
-
-namespace Rut::RxCmd
-{
-	bool Put(const char* cpStr, size_t nChar);
-	bool Put(std::string_view msStr);
-	bool Put(const wchar_t* wpStr, size_t nChar);
-	bool Put(std::wstring_view wsStr);
-	bool PutMBCS(const char* cpStr, size_t nCodePage);
-	bool PutMBCS(std::string_view msStr, size_t nCodePage);
-	bool PutFormat(const char* cpFormat, ...);
-	bool PutFormat(const wchar_t* cpFormat, ...);
-}
-
-namespace Rut::RxCmd
+namespace Rut::RxCmd::ArgManager
 {
 	class Value
 	{
@@ -42,14 +25,14 @@ namespace Rut::RxCmd
 
 }
 
-namespace Rut::RxCmd
+namespace Rut::RxCmd::ArgManager
 {
 	class Parser
 	{
 	private:
 		std::wstring m_wsProgramName;
 		std::vector<std::wstring> m_vcExample;
-		std::unordered_map<std::wstring, RxCmd::Value> m_mpCmd;
+		std::unordered_map<std::wstring, Value> m_mpCmd;
 
 	public:
 		Parser();
@@ -62,4 +45,20 @@ namespace Rut::RxCmd
 		const std::wstring& GetValue(std::wstring_view wsOption);
 		bool Ready();
 	};
+}
+
+namespace Rut::RxCmd
+{
+	bool Alloc(const wchar_t* lpTitle, bool isEdit = false);
+
+	bool Put(const char* cpStr, size_t nChar);
+	bool Put(std::string_view msStr);
+	bool Put(const wchar_t* wpStr, size_t nChar);
+	bool Put(std::wstring_view wsStr);
+	bool PutMBCS(const char* cpStr, size_t nCodePage);
+	bool PutMBCS(std::string_view msStr, size_t nCodePage);
+	bool PutFormat(const char* cpFormat, ...);
+	bool PutFormat(const wchar_t* cpFormat, ...);
+
+	using Arg = Rut::RxCmd::ArgManager::Parser;
 }

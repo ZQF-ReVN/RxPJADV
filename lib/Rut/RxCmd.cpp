@@ -8,8 +8,127 @@
 #include <stdexcept>
 
 
+namespace Rut::RxCmd::ArgManager
+{
+	Value::Value()
+	{
+
+	}
+
+	Value::Value(std::wstring_view wsValue, std::wstring_view wsHelp)
+	{
+		m_wsValue = wsValue;
+		m_wsHelp = wsHelp;
+	}
+
+	void Value::SetValue(std::wstring_view wsValue)
+	{
+		m_wsValue = wsValue;
+	}
+
+	void Value::SetHelp(std::wstring_view wsHelp)
+	{
+		m_wsHelp = wsHelp;
+	}
+
+	const std::wstring& Value::GetValue() const
+	{
+		return m_wsValue;
+	}
+
+	const std::wstring& Value::GetHelp() const
+	{
+		return m_wsHelp;
+	}
+}
+
+namespace Rut::RxCmd::ArgManager
+{
+	Parser::Parser()
+	{
+
+	}
+
+	bool Parser::Load(size_t nArg, wchar_t* aArgPtr[])
+	{
+		if (nArg < 1) { throw std::runtime_error("RxCmd::Parser::Parse: Arg Count Error!"); }
+
+		m_wsProgramName = Rut::RxPath::GetFileName(aArgPtr[0]);
+
+		if (nArg == 1)
+		{
+			this->ShowHelp();
+			return false;
+		}
+
+		for (size_t ite_arg = 1; ite_arg < nArg; ite_arg += 2)
+		{
+			std::wstring_view option = aArgPtr[ite_arg + 0];
+			std::wstring_view value = aArgPtr[ite_arg + 1];
+			auto ite_map = m_mpCmd.find(option.data());
+			if (ite_map == m_mpCmd.end()) { throw std::runtime_error("RxCmd::Parser::Parse: Not Cmd Find!"); }
+			ite_map->second.SetValue(value.data());
+		}
+
+		return true;
+	}
+
+	void Parser::ShowHelp()
+	{
+		std::wstring help_log;
+
+		help_log.append(L"Command:\n");
+		for (auto& cmd : m_mpCmd)
+		{
+			help_log.append(L"\t");
+			help_log.append(cmd.first);
+			help_log.append(L"\t");
+			help_log.append(cmd.second.GetHelp());
+			help_log.append(L"\n");
+		}
+
+		help_log.append(L"Example:\n");
+		for (auto& exp : m_vcExample)
+		{
+			help_log.append(L"\t");
+			help_log.append(m_wsProgramName);
+			help_log.append(L" ");
+			help_log.append(exp);
+			help_log.append(L"\n");
+		}
+
+		RxCmd::Put(help_log);
+	}
+
+	void Parser::AddCmd(std::wstring_view wsOption, std::wstring_view wsHelp)
+	{
+		Value& value = m_mpCmd.operator[](wsOption.data());
+		value.SetHelp(wsHelp);
+	}
+
+	void Parser::AddExample(std::wstring_view wsExample)
+	{
+		m_vcExample.emplace_back(wsExample);
+	}
+
+	const std::wstring& Parser::GetValue(std::wstring_view wsOption)
+	{
+		auto ite_map = m_mpCmd.find(wsOption.data());
+		if (ite_map == m_mpCmd.end()) { throw std::runtime_error("RxCmd::Parser::GetValue: Not Cmd Find!"); }
+		return ite_map->second.GetValue();
+	}
+
+	bool Parser::Ready()
+	{
+		return !m_mpCmd.empty();
+	}
+}
+
 namespace Rut::RxCmd
 {
+	static constexpr size_t PUT_BUFFER_MAX = 1024;
+
+
 	bool Alloc(const wchar_t* lpTitle, bool isEdit)
 	{
 		Rut::RxSys::ConsoleAlloc(lpTitle);
@@ -23,12 +142,6 @@ namespace Rut::RxCmd
 
 		return true;
 	}
-}
-
-
-namespace Rut::RxCmd
-{
-	static constexpr size_t PUT_BUFFER_MAX = 1024;
 
 
 	bool Put(const char* cpStr, size_t nChar)
@@ -89,118 +202,3 @@ namespace Rut::RxCmd
 }
 
 
-namespace Rut::RxCmd
-{
-	Value::Value()
-	{
-
-	}
-
-	Value::Value(std::wstring_view wsValue, std::wstring_view wsHelp)
-	{
-		m_wsValue = wsValue;
-		m_wsHelp = wsHelp;
-	}
-
-	void Value::SetValue(std::wstring_view wsValue)
-	{
-		m_wsValue = wsValue;
-	}
-
-	void Value::SetHelp(std::wstring_view wsHelp)
-	{
-		m_wsHelp = wsHelp;
-	}
-
-	const std::wstring& Value::GetValue() const
-	{
-		return m_wsValue;
-	}
-
-	const std::wstring& Value::GetHelp() const
-	{
-		return m_wsHelp;
-	}
-}
-
-namespace Rut::RxCmd
-{
-	Parser::Parser()
-	{
-
-	}
-
-	bool Parser::Load(size_t nArg, wchar_t* aArgPtr[])
-	{
-		if (nArg < 1) { throw std::runtime_error("RxCmd::Parser::Parse: Arg Count Error!"); }
-
-		m_wsProgramName = Rut::RxPath::GetFileName(aArgPtr[0]);
-
-		if (nArg == 1)
-		{
-			this->ShowHelp();
-			return false;
-		}
-
-		for (size_t ite_arg = 1; ite_arg < nArg; ite_arg += 2)
-		{
-			std::wstring_view option = aArgPtr[ite_arg + 0];
-			std::wstring_view value = aArgPtr[ite_arg + 1];
-			auto ite_map = m_mpCmd.find(option.data());
-			if (ite_map == m_mpCmd.end()) { throw std::runtime_error("RxCmd::Parser::Parse: Not Cmd Find!"); }
-			ite_map->second.SetValue(value.data());
-		}
-
-		return true;
-	}
-
-	void Parser::ShowHelp()
-	{
-		std::wstring help_log;
-
-		help_log.append(L"Command:\n");
-		for (auto& cmd : m_mpCmd)
-		{
-			help_log.append(L"\t");
-			help_log.append(cmd.first);
-			help_log.append(L"\t");
-			help_log.append(cmd.second.GetHelp());
-			help_log.append(L"\n");
-		}
-
-		help_log.append(L"Example:\n");
-		for (auto& exp : m_vcExample)
-		{
-			help_log.append(L"\t");
-			help_log.append(m_wsProgramName);
-			help_log.append(L" ");
-			help_log.append(exp);
-			help_log.append(L"\n");
-		}
-
-		RxCmd::Put(help_log);
-	}
-
-	void Parser::AddCmd(std::wstring_view wsOption, std::wstring_view wsHelp)
-	{
-		RxCmd::Value& value = m_mpCmd.operator[](wsOption.data());
-		value.SetHelp(wsHelp);
-	}
-
-	void Parser::AddExample(std::wstring_view wsExample)
-	{
-		m_vcExample.emplace_back(wsExample);
-	}
-
-	const std::wstring& Parser::GetValue(std::wstring_view wsOption)
-	{
-		auto ite_map = m_mpCmd.find(wsOption.data());
-		if (ite_map == m_mpCmd.end()) { throw std::runtime_error("RxCmd::Parser::GetValue: Not Cmd Find!"); }
-		return ite_map->second.GetValue();
-	}
-
-	bool Parser::Ready()
-	{
-		return !m_mpCmd.empty();
-	}
-}

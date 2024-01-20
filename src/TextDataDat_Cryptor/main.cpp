@@ -9,7 +9,7 @@ static void UserMain(int argc, wchar_t* argv[])
 {
 	try
 	{
-		Rut::RxCmd::Parser cmd;
+		Rut::RxCmd::Arg cmd;
 		cmd.AddCmd(L"-bin", L"textdata file path");
 		cmd.AddCmd(L"-out", L"textdata save path");
 		cmd.AddExample(L"-bin textdata.bin -out textdata.bin.dec");

@@ -27,9 +27,9 @@ namespace PJADV::Bin
 		void Save(const std::filesystem::path& phScenarioDat);
 
 	public:
-		size_t AddText(std::string&& msText);
-		size_t AddText(const std::string& msText);
-		size_t AddText(std::wstring_view wsText, size_t nCodePage);
+		uint32_t AddText(std::string&& msText);
+		uint32_t AddText(const std::string& msText);
+		uint32_t AddText(std::wstring_view wsText, size_t nCodePage);
 		const std::string& operator[](size_t nOffset);
 
 	public:
