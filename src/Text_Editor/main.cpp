@@ -155,11 +155,11 @@ static void UserMain(int argc, wchar_t* argv[])
 
 		if (cmd[L"-mode"] == L"export")
 		{
-			::Export(cmd[L"-text"], cmd[L"-scen"], cmd[L"-jmsg"], cmd[L"-jseq"], cmd[L"-code"].ToNum());
+			::Export(cmd[L"-text"], cmd[L"-scen"], cmd[L"-jmsg"], cmd[L"-jseq"], cmd[L"-code"]);
 		}
 		else if (cmd[L"-mode"] == L"import")
 		{
-			::Import(cmd[L"-text"], cmd[L"-scen"], cmd[L"-jmsg"], cmd[L"-jseq"], cmd[L"-code"].ToNum());
+			::Import(cmd[L"-text"], cmd[L"-scen"], cmd[L"-jmsg"], cmd[L"-jseq"], cmd[L"-code"]);
 		}
 		else
 		{

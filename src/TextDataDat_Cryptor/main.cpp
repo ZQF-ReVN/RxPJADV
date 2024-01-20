@@ -15,7 +15,7 @@ static void UserMain(int argc, wchar_t* argv[])
 		arg.AddExample(L"-bin textdata.bin -save textdata.bin.dec");
 		if (arg.Load(argc, argv) == false) { return; }
 
-		Rut::RxMem::Auto text_data_mem{ arg[L"-bin"]};
+		Rut::RxMem::Auto text_data_mem{ arg[L"-bin"].ToWStrView()};
 		PJADV::Bin::TextDataDat::XorBytes(text_data_mem, 0xC5);
 		text_data_mem.SaveData(arg[L"-save"]);
 	}

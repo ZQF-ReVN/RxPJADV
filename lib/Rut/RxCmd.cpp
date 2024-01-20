@@ -51,6 +51,21 @@ namespace Rut::RxCmd::ArgManager
 		return this->GetValue();
 	}
 
+	std::wstring_view Value::ToWStrView() const
+	{
+		return this->GetValue();
+	}
+
+	Value::operator size_t() const
+	{
+		return this->ToNum();
+	}
+
+	Value::operator std::wstring_view () const
+	{
+		return this->GetValue();
+	}
+
 	Value::operator const std::wstring& () const
 	{
 		return this->GetValue();

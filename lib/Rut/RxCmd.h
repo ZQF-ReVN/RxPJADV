@@ -26,8 +26,12 @@ namespace Rut::RxCmd::ArgManager
 	public:
 		size_t ToNum() const;
 		const std::wstring& ToWStr() const;
+		std::wstring_view ToWStrView() const;
 
 	public:
+		operator bool() const = delete;
+		operator size_t() const;
+		operator std::wstring_view () const;
 		operator const std::wstring& () const;
 		operator std::filesystem::path() const;
 		bool operator==(std::wstring_view wsValue) const;
