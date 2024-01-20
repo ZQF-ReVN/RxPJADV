@@ -16,13 +16,17 @@ static void UserMain(int argc, wchar_t* argv[])
 		arg.AddExample(L"-mode pack -folder archive/ -dat archive.dat ");
 		if (arg.Load(argc, argv) == false) { return; }
 
-		if (arg.GetValue(L"-mode") == L"extract")
+		if (arg[L"-mode"] == L"extract")
 		{
-			PJADV::Pack::Extract(arg.GetValue(L"-dat"), arg.GetValue(L"-folder"));
+			PJADV::Pack::Extract(arg[L"-dat"], arg[L"-folder"]);
 		}
-		else if (arg.GetValue(L"-mode") == L"pack")
+		else if (arg[L"-mode"] == L"pack")
 		{
-			PJADV::Pack::Pack(arg.GetValue(L"-folder"), arg.GetValue(L"-dat"));
+			PJADV::Pack::Pack(arg[L"-folder"], arg[L"-dat"]);
+		}
+		else
+		{
+			throw std::runtime_error("Error Command!");
 		}
 	}
 	catch (const std::runtime_error& err)

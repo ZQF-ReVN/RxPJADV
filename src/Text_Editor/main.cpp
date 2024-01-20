@@ -143,25 +143,28 @@ static void UserMain(int argc, wchar_t* argv[])
 	try
 	{
 		Rut::RxCmd::Arg cmd;
-		cmd.AddCmd(L"-textdata", L"textdata path");
-		cmd.AddCmd(L"-scenario", L"scenario path");
-		cmd.AddCmd(L"-json_msg", L"msg json path");
-		cmd.AddCmd(L"-json_seq", L"seq json path");
-		cmd.AddCmd(L"-codepage", L"codepage");
-		cmd.AddCmd(L"-workmode", L"mode [export]:export texts, [import]:import texts");
-		cmd.AddExample(L"-workmode export -textdata textdata.bin -scenario scenario.dat -json_msg scenario_msg.json -json_seq scenario_seq.json -codepage 932");
-		cmd.AddExample(L"-workmode import -textdata textdata.bin -scenario scenario.dat -json_msg scenario_msg.json -json_seq scenario_seq.json -codepage 932");
+		cmd.AddCmd(L"-text", L"textdata path");
+		cmd.AddCmd(L"-scen", L"scenario path");
+		cmd.AddCmd(L"-jmsg", L"msg json path");
+		cmd.AddCmd(L"-jseq", L"seq json path");
+		cmd.AddCmd(L"-code", L"codepage");
+		cmd.AddCmd(L"-mode", L"mode [export]:export texts, [import]:import texts");
+		cmd.AddExample(L"-mode export -text textdata.bin -scen scenario.dat -jmsg scenario_msg.json -jseq scenario_seq.json -code 932");
+		cmd.AddExample(L"-mode import -text textdata.bin -scen scenario.dat -jmsg scenario_msg.json -jseq scenario_seq.json -code 932");
 		if (cmd.Load(argc, argv) == false) { return; }
 
-		if (cmd.GetValue(L"-workmode") == L"export")
+		if (cmd[L"-mode"] == L"export")
 		{
-			::Export(cmd.GetValue(L"-textdata"), cmd.GetValue(L"-scenario"), cmd.GetValue(L"-json_msg"), cmd.GetValue(L"-json_seq"), ::_wtoi(cmd.GetValue(L"-codepage").c_str()));
+			::Export(cmd[L"-text"], cmd[L"-scen"], cmd[L"-jmsg"], cmd[L"-jseq"], cmd[L"-code"].ToNum());
 		}
-		else if (cmd.GetValue(L"-workmode") == L"import")
+		else if (cmd[L"-mode"] == L"import")
 		{
-			::Import(cmd.GetValue(L"-textdata"), cmd.GetValue(L"-scenario"), cmd.GetValue(L"-json_msg"), cmd.GetValue(L"-json_seq"), ::_wtoi(cmd.GetValue(L"-codepage").c_str()));
+			::Import(cmd[L"-text"], cmd[L"-scen"], cmd[L"-jmsg"], cmd[L"-jseq"], cmd[L"-code"].ToNum());
 		}
-
+		else
+		{
+			throw std::runtime_error("Error Command!");
+		}
 	}
 	catch (const std::runtime_error& err)
 	{

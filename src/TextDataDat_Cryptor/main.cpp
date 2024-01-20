@@ -9,15 +9,15 @@ static void UserMain(int argc, wchar_t* argv[])
 {
 	try
 	{
-		Rut::RxCmd::Arg cmd;
-		cmd.AddCmd(L"-bin", L"textdata file path");
-		cmd.AddCmd(L"-out", L"textdata save path");
-		cmd.AddExample(L"-bin textdata.bin -out textdata.bin.dec");
-		if (cmd.Load(argc, argv) == false) { return; }
+		Rut::RxCmd::Arg arg;
+		arg.AddCmd(L"-bin", L"textdata file path");
+		arg.AddCmd(L"-save", L"textdata save path");
+		arg.AddExample(L"-bin textdata.bin -save textdata.bin.dec");
+		if (arg.Load(argc, argv) == false) { return; }
 
-		Rut::RxMem::Auto text_data_mem{ cmd.GetValue(L"-bin") };
+		Rut::RxMem::Auto text_data_mem{ arg[L"-bin"]};
 		PJADV::Bin::TextDataDat::XorBytes(text_data_mem, 0xC5);
-		text_data_mem.SaveData(cmd.GetValue(L"-out"));
+		text_data_mem.SaveData(arg[L"-save"]);
 	}
 	catch (const std::runtime_error& err)
 	{
