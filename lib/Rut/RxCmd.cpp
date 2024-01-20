@@ -141,7 +141,7 @@ namespace Rut::RxCmd::ArgManager
 		return !m_mpCmd.empty();
 	}
 
-	Value& Parser::operator[](std::wstring_view wsOption)
+	const Value& Parser::operator[](std::wstring_view wsOption)
 	{
 		auto ite_map = m_mpCmd.find(wsOption.data());
 		if (ite_map == m_mpCmd.end()) { throw std::runtime_error("RxCmd::Parser::GetValue: Not Cmd Find!"); }

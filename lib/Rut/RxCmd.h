@@ -55,9 +55,9 @@ namespace Rut::RxCmd::ArgManager
 		bool Ready();
 
 	public:
-		Value& operator[](int) = delete;
-		Value& operator[](size_t) = delete;
-		Value& operator[](std::wstring_view wsOption);
+		const Value& operator[](int) = delete;
+		const Value& operator[](size_t) = delete;
+		const Value& operator[](std::wstring_view wsOption);
 	};
 }
 
