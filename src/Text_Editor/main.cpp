@@ -69,8 +69,8 @@ static void Export(const std::filesystem::path& phTextDataBin, const std::filesy
 			{
 				Rut::RxJson::JObject msg_entry;
 				std::wstring chapter_text = Rut::RxStr::ToWCS(text_dat[chapter_text_offset], nCodePage);
-				msg_entry[L"chapter_org"] = chapter_text;
-				msg_entry[L"chapter_tra"] = std::move(chapter_text);
+				msg_entry[L"chp_org"] = chapter_text;
+				msg_entry[L"chp_tra"] = std::move(chapter_text);
 
 				json_seq_array.push_back(ite_code);
 				json_msg_array.emplace_back(std::move(msg_entry));
@@ -127,7 +127,7 @@ static void Import(const std::filesystem::path& phTextDataBin, const std::filesy
 		{
 			if (code_ptr[1])
 			{
-				code_ptr[1] = text_dat.AddText(msg[L"chapter_tra"], nCodePage);
+				code_ptr[1] = text_dat.AddText(msg[L"chp_tra"], nCodePage);
 			}
 		}
 		break;
