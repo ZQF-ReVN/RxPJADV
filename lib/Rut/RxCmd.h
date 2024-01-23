@@ -24,6 +24,7 @@ namespace Rut::RxCmd::ArgManager
 		const std::wstring& GetHelp() const;
 
 	public:
+		bool ToBool() const;
 		size_t ToNum() const;
 		const std::wstring& ToWStr() const;
 		std::wstring_view ToWStrView() const;

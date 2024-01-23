@@ -41,6 +41,22 @@ namespace Rut::RxCmd::ArgManager
 		return m_wsHelp;
 	}
 
+	bool Value::ToBool() const
+	{
+		if (this->GetValue() == L"true")
+		{
+			return true;
+		}
+		else if (this->GetValue() == L"false")
+		{
+			return false;
+		}
+		else
+		{
+			throw std::runtime_error("RxCmd::ArgManager::Value::ToBool: Error Bool Value!");
+		}
+	}
+
 	size_t Value::ToNum() const
 	{
 		return ::_wtoi(this->GetValue().c_str());
@@ -99,6 +115,11 @@ namespace Rut::RxCmd::ArgManager
 		{
 			this->ShowHelp();
 			return false;
+		}
+
+		if ((nArg % 2) == 0)
+		{
+			throw std::runtime_error("RxCmd::Parser::Parse: Error Arg Count!");
 		}
 
 		for (size_t ite_arg = 1; ite_arg < nArg; ite_arg += 2)
