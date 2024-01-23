@@ -64,26 +64,26 @@ namespace PJADV::Bin
 		}
 	}
 
-	void TextDataDat::MapNext()
+	size_t TextDataDat::MapNext()
 	{
+		size_t old_offset = m_nEndOffset;
 		size_t last_text_len = m_vcTextData[m_nEndIndex].size();
 		m_nEndIndex = m_nEndIndex + 1;
 		m_nEndOffset = m_nEndOffset + last_text_len + 2;
 		m_mpOffsetToIndex[m_nEndOffset] = m_nEndIndex;
+		return old_offset;
 	}
 
 	uint32_t TextDataDat::AddText(std::string&& msText)
 	{
 		m_vcTextData.emplace_back(std::move(msText));
-		this->MapNext();
-		return (uint32_t)m_nEndOffset;
+		return (uint32_t)this->MapNext();
 	}
 
 	uint32_t TextDataDat::AddText(const std::string& msText)
 	{
 		m_vcTextData.emplace_back(msText);
-		this->MapNext();
-		return (uint32_t)m_nEndOffset;
+		return (uint32_t)this->MapNext();
 	}
 
 	uint32_t TextDataDat::AddText(std::wstring_view wsText, size_t nCodePage)

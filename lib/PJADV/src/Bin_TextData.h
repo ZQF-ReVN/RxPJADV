@@ -18,7 +18,7 @@ namespace PJADV::Bin
 		std::map<size_t, size_t> m_mpOffsetToIndex;
 
 	private:
-		void MapNext();
+		size_t MapNext();
 
 	public:
 		TextDataDat();

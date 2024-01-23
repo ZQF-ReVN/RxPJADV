@@ -14,6 +14,7 @@ static void Export(const std::filesystem::path& phTextDataBin, const std::filesy
 
 	Rut::RxJson::JArray json_msg_array;
 	Rut::RxJson::JArray json_seq_array;
+
 	int ite_code = 0;
 	for (auto code_ptr : scen_dat.GetPtrs())
 	{
@@ -29,8 +30,8 @@ static void Export(const std::filesystem::path& phTextDataBin, const std::filesy
 			if (name_text_offset)
 			{
 				std::wstring char_name_text = Rut::RxStr::ToWCS(text_dat[name_text_offset], nCodePage);
-				msg_entry[L"cha_org"] = char_name_text;
-				msg_entry[L"cha_tra"] = std::move(char_name_text);
+				msg_entry[L"chr_org"] = char_name_text;
+				msg_entry[L"chr_tra"] = std::move(char_name_text);
 			}
 
 			if (msg_text_offset)
@@ -103,7 +104,7 @@ static void Import(const std::filesystem::path& phTextDataBin, const std::filesy
 		{
 			if (code_ptr[2])
 			{
-				code_ptr[2] = text_dat.AddText(msg[L"cha_tra"], nCodePage);
+				code_ptr[2] = text_dat.AddText(msg[L"chr_tra"], nCodePage);
 			}
 
 			if (code_ptr[3])
@@ -175,14 +176,16 @@ static void UserMain(int argc, wchar_t* argv[])
 
 static void DebugMain()
 {
-	//::Export(L"textdata.bin", L"scenario.dat");
+	//::Export(L"textdata.bin", L"scenario.dat", L"scenario_msg.json", L"scenario_seq.json", 932);
 	//::Import(L"textdata.bin", L"scenario.dat", L"scenario_msg.json", L"scenario_seq.json", 932);
+	::Export(L"textdata.bin.new", L"scenario.dat.new", L"scenario_msg.json.new", L"scenario_seq.json.new", 932);
 }
 
 
 int wmain(int argc, wchar_t* argv[])
 {
 	::UserMain(argc, argv);
+	//::DebugMain();
 }
 
 
