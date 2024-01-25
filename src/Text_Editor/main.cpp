@@ -1,10 +1,10 @@
 ﻿#include <iostream>
 #include <ranges>
 
-#include "../../lib/Rut/RxCmd.h"
-#include "../../lib/Rut/RxStr.h"
-#include "../../lib/Rut/RxJson.h"
-#include "../../lib/PJADV/Bin.h"
+#include "lib/Rut/RxCmd.h"
+#include "lib/Rut/RxStr.h"
+#include "lib/Rut/RxJson.h"
+#include "lib/PJADV/Bin.h"
 
 
 static void Export(const std::filesystem::path& phTextDataBin, const std::filesystem::path& phScenarioDataBin, const std::filesystem::path& phMsgJson, const std::filesystem::path& phSeqJson, size_t nCodePage)
