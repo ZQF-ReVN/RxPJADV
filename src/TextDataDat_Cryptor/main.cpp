@@ -1,8 +1,8 @@
 ﻿#include <iostream>
 
-#include "../../lib/Rut/RxCmd.h"
-#include "../../lib/Rut/RxMem.h"
-#include "../../lib/PJADV/Bin.h"
+#include "lib/Rut/RxCmd.h"
+#include "lib/Rut/RxMem.h"
+#include "lib/PJADV/Bin.h"
 
 
 static void UserMain(int argc, wchar_t* argv[])

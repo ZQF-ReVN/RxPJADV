@@ -1,6 +1,6 @@
- #include "Bin_TextData.h"
-#include "../../Rut/RxStr.h"
-#include "../../Rut/RxFile.h"
+#include "Bin_TextData.h"
+#include "lib/Rut/RxStr.h"
+#include "lib/Rut/RxFile.h"
 
 #include <ranges>
 #include <cassert>

@@ -176,9 +176,9 @@ static void UserMain(int argc, wchar_t* argv[])
 
 static void DebugMain()
 {
-	//::Export(L"textdata.bin", L"scenario.dat", L"scenario_msg.json", L"scenario_seq.json", 932);
+	::Export(L"textdata.bin", L"scenario.dat", L"scenario_msg.json", L"scenario_seq.json", 932);
 	//::Import(L"textdata.bin", L"scenario.dat", L"scenario_msg.json", L"scenario_seq.json", 932);
-	::Export(L"textdata.bin.new", L"scenario.dat.new", L"scenario_msg.json.new", L"scenario_seq.json.new", 932);
+	//::Export(L"textdata.bin.new", L"scenario.dat.new", L"scenario_msg.json.new", L"scenario_seq.json.new", 932);
 }
 
 

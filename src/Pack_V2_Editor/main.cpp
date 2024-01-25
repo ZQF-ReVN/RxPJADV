@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 
-#include "../../lib/Rut/RxCmd.h"
-#include "../../lib/PJADV/Pack.h"
+#include "lib/Rut/RxCmd.h"
+#include "lib/PJADV/Pack.h"
 
 
 static void UserMain(int argc, wchar_t* argv[])

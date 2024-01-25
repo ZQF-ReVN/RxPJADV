@@ -1,5 +1,5 @@
 ﻿# Library Name
-set(PROJECT_NAME PJADV)
+set(USER_PROJECT_NAME PJADV)
 
 # Cpp Standard
 set(CMAKE_CXX_STANDARD 23)
@@ -16,4 +16,4 @@ list(APPEND SRC_FILE
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Bin_FileName.cpp")
 
 # Set Library
-add_library(${PROJECT_NAME} "${SRC_FILE}")
+add_library(${USER_PROJECT_NAME} "${SRC_FILE}")

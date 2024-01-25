@@ -1,28 +1,67 @@
 # Main CMakeLists
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.15)
 
 # Project Name
 project(PJADV_Tools)
 
-# Tool Chain
-set(CMAKE_TOOLCHAIN_FILE "toolchain.cmake")
+# option
+set(STATIC_MSVC_RUNTIME ON)
 
 # MSVC Setting
 if(MSVC)
-    add_compile_options("$<$<CONFIG:Release>:/source-charset:utf-8>;$<$<CONFIG:Release>:/GL>;$<$<CONFIG:Release>:/Gy>;$<$<CONFIG:Release>:/GS>;$<$<CONFIG:Release>:/Zc:inline>;$<$<CONFIG:Release>:/Zc:forScope>")
-    add_link_options("$<$<CONFIG:Release>:/LTCG:INCREMENTAL>;$<$<CONFIG:Release>:/OPT:REF>")
+    # Macro
     add_definitions(-DUNICODE -D_UNICODE)
+
+    # Runtime
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        if (STATIC_MSVC_RUNTIME)
+            set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDebug)
+        else()
+            set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDebugDLL)
+        endif()
+    else()
+        if (STATIC_MSVC_RUNTIME)
+            set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded)
+        else()
+            set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)
+        endif()
+    endif()
+
+    # Compiler
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        #set(CMAKE_CXX_FLAGS_DEBUG)
+    else()
+        add_link_options(/LTCG:INCREMENTAL /OPT:REF)
+        set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /source-charset:utf-8 /GL /Gy /GS /Zc:inline /Zc:forScope")
+        #set(CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+        #set(CMAKE_CXX_FLAGS_MINSIZEREL)
+    endif()
 endif()
 
 # Value Define
-set(LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/lib")
-set(THIRD_DIR "${CMAKE_CURRENT_LIST_DIR}/third")
+set(ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
+set(LIB_DIR "${ROOT_DIR}/lib")
+set(THIRD_DIR "${ROOT_DIR}/third")
 
 # Out Path
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_LIST_DIR}/.out/exe)
-set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_LIST_DIR}/.out/lib)
+if (CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set(EXECUTABLE_OUTPUT_PATH "${ROOT_DIR}/bin/x32")
+    set(LIBRARY_OUTPUT_PATH "${ROOT_DIR}/bin/x32")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(EXECUTABLE_OUTPUT_PATH "${ROOT_DIR}/bin/x64")
+    set(LIBRARY_OUTPUT_PATH "${ROOT_DIR}/bin/x64")
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(EXECUTABLE_OUTPUT_PATH "${EXECUTABLE_OUTPUT_PATH}/debug")
+    set(LIBRARY_OUTPUT_PATH "${LIBRARY_OUTPUT_PATH}/debug")
+else()
+    set(EXECUTABLE_OUTPUT_PATH "${EXECUTABLE_OUTPUT_PATH}/release")
+    set(LIBRARY_OUTPUT_PATH "${LIBRARY_OUTPUT_PATH}/release")
+endif()
 
 # Library
+    include_directories("${CMAKE_CURRENT_LIST_DIR}")
     add_subdirectory("lib/Rut")
     add_subdirectory("lib/PJADV")
 
