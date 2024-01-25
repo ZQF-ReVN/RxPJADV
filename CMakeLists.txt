@@ -61,7 +61,7 @@ else()
 endif()
 
 # Library
-    include_directories("${CMAKE_CURRENT_LIST_DIR}")
+    include_directories("${ROOT_DIR}")
     add_subdirectory("lib/Rut")
     add_subdirectory("lib/PJADV")
 
