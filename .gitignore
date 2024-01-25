@@ -4,3 +4,5 @@
 
 /.out
 /.vs
+/.build/x64-debug
+/bin/x64/debug
