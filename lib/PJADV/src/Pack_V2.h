@@ -4,6 +4,6 @@
 
 namespace PJADV::Pack
 {
-	void Extract(std::filesystem::path phPackPath, std::filesystem::path phSaveFolder);
-	void Pack(std::filesystem::path phFileFolder, std::filesystem::path phSavePath);
+	void Extract(const std::filesystem::path& phPackPath, const std::filesystem::path& phSaveFolder);
+	void Pack(const std::filesystem::path& phFileFolder, const std::filesystem::path& phSavePath);
 }

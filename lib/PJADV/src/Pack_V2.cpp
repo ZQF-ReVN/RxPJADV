@@ -8,7 +8,7 @@
 
 namespace PJADV::Pack
 {
-	void Extract(std::filesystem::path phPackPath, std::filesystem::path phSaveFolder)
+	void Extract(const std::filesystem::path& phPackPath, const std::filesystem::path& phSaveFolder)
 	{
 		Rut::RxFile::Binary ifs{ phPackPath, Rut::RIO_READ };
 
@@ -34,7 +34,7 @@ namespace PJADV::Pack
 		}
 	}
 
-	void Pack(std::filesystem::path phFileFolder, std::filesystem::path phSavePath)
+	void Pack(const std::filesystem::path& phFileFolder, const std::filesystem::path& phSavePath)
 	{
 		PAJ_Pack_HDR_Info hdr_info{ 0 };
 		std::vector<PAJ_Pack_File_Name> file_name_list;
