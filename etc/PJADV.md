@@ -229,7 +229,7 @@ struct PAJ_EPA
     uint32_t uiUn0;
     uint32_t uiWidth;
     uint32_t uiHeigh;
-    uint8_t aData[??]; // lzss
+    uint8_t aData[??];
 };
 
 struct PAJ_FontData_Entry
