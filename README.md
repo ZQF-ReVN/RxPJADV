@@ -19,4 +19,4 @@ Tools For PJADV Engine. `textdata.bin` `scenario.dat`
 - [[PJADV] 字体渲染分析](https://github.com/Dir-A/Dir-A_Essays_MD/blob/main/Reverse/%5BPJADV%5D%20%E5%AD%97%E4%BD%93%E6%B8%B2%E6%9F%93%E5%88%86%E6%9E%90/%5BPJADV%5D%20%E5%AD%97%E4%BD%93%E6%B8%B2%E6%9F%93%E5%88%86%E6%9E%90.md)
 
 ## More
-- [the analytical report](/etc)
+- [note](/etc)
