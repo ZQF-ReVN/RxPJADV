@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 
-#include "../../lib/PJADV/Bin.h"
+#include <PJADV/Bin_FileName.h>
 
 
 int main()

@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 
-#include "../../lib/Rut/RxFile.h"
-#include "../../lib/PJADV/Bin.h"
+#include <Rut/RxFile.h>
+#include <PJADV/Bin_Scenario.h>
 
 
 int main()

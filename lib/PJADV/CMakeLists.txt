@@ -1,19 +1,18 @@
-﻿# Library Name
-set(USER_PROJECT_NAME PJADV)
+﻿# Project
+project(PJADV)
 
-# Cpp Standard
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-# Add Library
-link_libraries(Rut)
-
-# Set Source File Path
-list(APPEND SRC_FILE 
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Pack_V2.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Bin_Scenario.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Bin_TextData.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Bin_FileName.cpp")
+# Source File
+list(APPEND "${PROJECT_NAME}_SRC_FILE" 
+    "src/PJADV/Pack_V2.cpp"
+    "src/PJADV/Bin_Scenario.cpp"
+    "src/PJADV/Bin_TextData.cpp"
+    "src/PJADV/Bin_FileName.cpp")
 
 # Set Library
-add_library(${USER_PROJECT_NAME} "${SRC_FILE}")
+add_library("${PROJECT_NAME}" "${${PROJECT_NAME}_SRC_FILE}")
+target_include_directories("${PROJECT_NAME}" INTERFACE "src")
+target_compile_features("${PROJECT_NAME}" PRIVATE cxx_std_23)
+target_compile_options("${PROJECT_NAME}" PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>")
+
+# Add Library
+target_link_libraries("${PROJECT_NAME}" PRIVATE Rut)

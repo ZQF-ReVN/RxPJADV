@@ -4,7 +4,7 @@
 #include <vector>
 #include <filesystem>
 
-#include "lib/Rut/RxMem.h"
+#include <Rut/RxMem.h>
 
 
 namespace PJADV::Bin

@@ -1,8 +1,9 @@
 ﻿#include <iostream>
+#include <span>
 
-#include "lib/Rut/RxCmd.h"
-#include "lib/Rut/RxMem.h"
-#include "lib/PJADV/Bin.h"
+#include <Rut/RxCmd.h>
+#include <Rut/RxMem.h>
+#include <PJADV/Bin_TextData.h>
 
 
 static void UserMain(int argc, wchar_t* argv[])
@@ -36,6 +37,7 @@ static void DebugMain()
 int wmain(int argc, wchar_t* argv[])
 {
 	::UserMain(argc, argv);
+	//::DebugMain();
 }
 
 
