@@ -307,12 +307,12 @@ struct PAJ_FontData_List_Node
 	struct
 	{
 		dword: OP
-		dword: nSeq 
-		dword: foa_in_text_data(chara name)
-		dword: foa_in_text_data(msg text)
-		dword: nSeq
-		dword: un2
-		dword: un3
+		dword: seq_in_filename_dat(voice file name) 
+		dword: foa_in_textdata_dat(chara name)
+		dword: foa_in_textdata_dat(msg text)
+		dword: msg_seq(0,1,2,3,4, max == PAJ_Scenario_Dat.uiMsgCount)
+		dword: un_flag
+		dword: stack_get
 	}
     example:
 	    07030080 00000000 00000000 4C000000 01000000 00000300 01000000
