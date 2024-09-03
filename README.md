@@ -1,5 +1,7 @@
-# PJADV_Tools
-Tools For PJADV Engine. `textdata.bin` `scenario.dat`
+**⚠This repository is for developers only, if you just want to use the tools, please go to [ReVN](https://github.com/Dir-A/ReVN)!⚠**
+
+# RxPJADV
+Tools For PJADV Engine. `textdata.bin` `scenario.dat`  
 
 ## Tools
 ### Pack_V2_Editor
