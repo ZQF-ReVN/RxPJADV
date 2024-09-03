@@ -4,7 +4,7 @@
 #include <ZxMem/ZxMem.h>
 
 
-namespace ZQF::RxPJADV::Bin
+namespace ZQF::RxPJADV::Script
 {
 	class ScenarioDat
 	{

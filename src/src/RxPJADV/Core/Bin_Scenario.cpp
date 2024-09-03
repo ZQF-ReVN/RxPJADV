@@ -2,10 +2,10 @@
 #include "Types.h"
 #include <ZxFile/ZxFile.h>
 #include <ranges>
-#include <iostream>
+#include <format>
 
 
-namespace ZQF::RxPJADV::Bin
+namespace ZQF::RxPJADV::Script
 {
 	ScenarioDat::ScenarioDat()
 	{
@@ -21,21 +21,24 @@ namespace ZQF::RxPJADV::Bin
 	{
 		m_amScenario.Load(msScenarioDatPath);
 
-		if (std::memcmp(m_amScenario.Ptr(), "PJADV_SF0001", 12) != 0) { throw std::runtime_error("ScenarioDat::Load: Unknow File Format!"); }
+		if (std::memcmp(m_amScenario.Ptr(), "PJADV_SF0001", 12) != 0) { throw std::runtime_error("RxPJADV::Bin::ScenarioDat::Load(): unknown file format!"); }
 		m_amScenario.PosInc(12);
 
-		[[maybe_unused]] const auto command_count{ m_amScenario.Get<std::uint32_t>() };
+		[[maybe_unused]] auto flag{ m_amScenario.Get<std::uint32_t>() };
 
 		m_amScenario.PosInc(16); // skip unknown data
 
 		auto cmd_ptr{ m_amScenario.PtrCur() };
-		const auto max_ptr = m_amScenario.Ptr() + m_amScenario.SizeBytes() - 28;
-		while (cmd_ptr <= max_ptr)
+		auto max_ptr{ m_amScenario.PtrCur() + m_amScenario.SizeBytesCur() };
+		while (cmd_ptr != max_ptr)
 		{
+			if (cmd_ptr > max_ptr) { throw std::runtime_error("RxPJADV::Bin::ScenarioDat::Load(): scan cmd error!"); }
+
 			const auto cur_cmd_ptr = reinterpret_cast<Script::OPCode*>(cmd_ptr);
-			cmd_ptr += cur_cmd_ptr->ucCount * 4;
-			m_vcCodePtr.emplace_back((uint32_t*)cur_cmd_ptr);
+			cmd_ptr += (cur_cmd_ptr->ucCount == 0) ? (4) : (cur_cmd_ptr->ucCount * 4);
+			m_vcCodePtr.push_back(reinterpret_cast<std::uint32_t*>(cur_cmd_ptr));
 		}
+
 	}
 
 	auto ScenarioDat::Save(const std::string_view msScenarioDatPath) -> void
@@ -46,13 +49,11 @@ namespace ZQF::RxPJADV::Bin
 	auto ScenarioDat::ShowCommand(std::uint32_t /*uiOpcode*/) -> void
 	{
 		std::string text;
-		char buffer[100];
 		for (auto cmd_ptr : m_vcCodePtr)
 		{
 			if (cmd_ptr[0] == 0x80000307)
 			{
-				std::sprintf(buffer, "0x%08x, 0x%08x, 0x%08x, 0x%08x, 0x%08x, 0x%08x, 0x%08x\n", cmd_ptr[0], cmd_ptr[1], cmd_ptr[2], cmd_ptr[3], cmd_ptr[4], cmd_ptr[5], cmd_ptr[6]);
-				text.append(buffer);
+				text.append(std::format("{:#010x}, {:#010x}, {:#010x}, {:#010x}, {:#010x}, {:#010x}, {:#010x}\n", cmd_ptr[0], cmd_ptr[1], cmd_ptr[2], cmd_ptr[3], cmd_ptr[4], cmd_ptr[5], cmd_ptr[6]));
 			}
 			//else if (command_ptr[0] == 0x01010804)
 			//{

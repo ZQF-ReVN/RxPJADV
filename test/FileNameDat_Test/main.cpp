@@ -7,7 +7,7 @@ auto main(void) -> int
 {
 	try
 	{
-		ZQF::RxPJADV::Bin::FileNameDat file_name_dat{ "filename.dat", 932 };
+		ZQF::RxPJADV::Script::FileNameDat file_name_dat{ "filename.dat", 932 };
 	}
 	catch (const std::exception& err)
 	{

@@ -1,107 +1,77 @@
 #include "Bin_TextData.h"
-#include <ZxFile/ZxFile.h>
+#include "Types.h"
 #include <ZxMem/ZxMem.h>
 #include <ZxCvt/ZxCvt.h>
+#include <ZxFile/ZxFile.h>
 #include <ranges>
 #include <cassert>
 
 
-namespace ZQF::RxPJADV::Bin
+namespace ZQF::RxPJADV::Script
 {
 	TextDataDat::TextDataDat()
 	{
 
 	}
 
-	TextDataDat::TextDataDat(const std::string_view msTextDataBinPath, const std::size_t nCodePage)
+	TextDataDat::TextDataDat(const std::string_view msTextDataBinPath):
+		m_TextDat{ msTextDataBinPath }
 	{
-		this->Load(msTextDataBinPath, nCodePage);
+		if (std::memcmp(m_TextDat.PtrCur(), "PJADV_TF0001", 12)) { throw std::runtime_error("RxPJADV::Bin::TextDataDat::Load(): unknown file format!"); }
+		m_nLastOffset = m_TextDat.SizeBytes();
 	}
 
-	auto TextDataDat::Load(const std::string_view msTextDataBinPath, const std::size_t nCodePage) -> void
-	{
-		if (m_vcTextData.size()) { m_vcTextData.clear(); }
-
-		ZxMem textdata_mem{ msTextDataBinPath };
-		if (textdata_mem.SizeBytes() < 12) { throw std::runtime_error("RxPJADV::Bin::TextDataDat::Load(): unknown file format!"); }
-		
-		// check signature
-		if (std::memcmp(textdata_mem.PtrCur(), "PJADV_TF0001", 12)) { throw std::runtime_error("RxPJADV::Bin::TextDataDat::Load(): unknown file format!"); }
-		textdata_mem.PosInc(12);
-
-		// get text count
-		const auto text_count{ static_cast<std::size_t>(textdata_mem.Get<std::uint32_t>()) };
-
-		const auto text_table_ptr{ textdata_mem.PtrCur<char*>() };
-
-		// read all text
-		ZxCvt cvt;
-		std::size_t textdata_offset{};
-		for (auto idx : std::views::iota(0u, text_count))
-		{
-			m_mpOffsetToIndex[textdata_offset] = idx;
-			const std::string_view text{ text_table_ptr + textdata_offset };
-			textdata_offset += text.size() + 2;
-			m_vcTextData.emplace_back(cvt.MBCSToUTF8(text, nCodePage));
-		}
-
-		m_nEndIndex = text_count;
-		m_nEndOffset = textdata_offset;
-	}
-
-	auto TextDataDat::Save(const std::string_view msScenarioDatPath, const std::size_t nCodePage) const -> void
+	auto TextDataDat::Save(const std::string_view msScenarioDatPath) const -> void
 	{
 		ZxFile ofs{ msScenarioDatPath, ZxFile::OpenMod::WriteForce };
-		
-		ofs << std::span{ "PJADV_TF0001", 12 };
-		ofs << static_cast<std::uint32_t>(m_vcTextData.size());
 
-		ZxCvt cvt;
-		for (const auto& text : m_vcTextData)
+		ofs << std::span{ "PJADV_TF0001", 12 };
+		ofs << static_cast<std::uint32_t>(m_vcAppend.size() + m_TextDat.Ptr<Script::TextData_HDR*>()->nTextCount);
+		ofs << std::span{ m_TextDat.Ptr() + Script::TextData_HDR::SizeBytes(), m_TextDat.SizeBytes() - Script::TextData_HDR::SizeBytes() };
+
+		for (const auto& text : m_vcAppend)
 		{
-			const auto text_enc{ cvt.UTF8ToMBCS(text, nCodePage) };
-			ofs << std::span{ text_enc.data(), text_enc.size() };
+			ofs << std::span{ text.data(), text.size() };
 			ofs << std::span{ "\0\0", 2 };
 		}
 	}
 
-	auto RxPJADV::Bin::TextDataDat::SaveViaJson() const -> ZxJson::JValue
+	auto TextDataDat::SaveViaJson(const std::size_t nCodePage) const -> ZxJson::JValue
 	{
-		ZxJson::JObject_t info
-		{
-			{ "signature", "PJADV_TF0001" },
-			{ "text_count", m_vcTextData.size() }
-		};
-
+		ZxCvt cvt;
 		ZxJson::JArray_t texts;
-		for (const auto& msg : m_vcTextData)
+
+		const auto text_cnt{ m_TextDat.Ptr<Script::TextData_HDR*>()->nTextCount };
+		auto text_ptr{ m_TextDat.Ptr<char*>() + Script::TextData_HDR::SizeBytes() };
+		for ([[maybe_unused]] const auto idx : std::views::iota(0u, text_cnt))
 		{
-			texts.emplace_back(msg);
+			const std::string_view text_sv{ text_ptr };
+			texts.emplace_back(cvt.MBCSToUTF8(text_sv, nCodePage));
+			text_ptr += text_sv.size() + 2;
 		}
 
-		return ZxJson::JObject_t{ { "info", std::move(info) },{"texts", std::move(texts) }};
+		for (const auto& msg : m_vcAppend)
+		{
+			texts.emplace_back(cvt.MBCSToUTF8(msg, nCodePage));
+		}
+
+		return ZxJson::JObject_t
+		{ 
+			{ "info", ZxJson::JObject_t{ { "signature", "PJADV_TF0001" }, { "text_count", m_vcAppend.size() + text_cnt } } },
+			{ "texts", std::move(texts) } 
+		};
 	}
 
-	auto TextDataDat::MapNext() -> std::size_t
+	auto TextDataDat::GetText(const std::size_t nOffset) const -> std::string_view
 	{
-		std::size_t old_offset = m_nEndOffset;
-		std::size_t last_text_len = m_vcTextData[m_nEndIndex].size();
-		m_nEndIndex = m_nEndIndex + 1;
-		m_nEndOffset = m_nEndOffset + last_text_len + 2;
-		m_mpOffsetToIndex[m_nEndOffset] = m_nEndIndex;
-		return old_offset;
+		if (nOffset > m_TextDat.SizeBytes()) { throw std::runtime_error("RxPJADV::Bin::TextDataDat::GetText(): out of size!"); }
+		return m_TextDat.Ptr<char*>() + nOffset;
 	}
 
-	auto TextDataDat::AddText(const std::string_view msText) -> std::uint32_t
+	auto TextDataDat::AppendText(const std::string_view msText) -> std::size_t
 	{
-		m_vcTextData.emplace_back(msText);
-		return static_cast<std::uint32_t>(this->MapNext());
-	}
-
-	auto TextDataDat::operator[](const std::size_t nOffset) const -> const std::string&
-	{
-		const auto index = m_mpOffsetToIndex.at(nOffset);
-		return m_vcTextData[index];
+		m_vcAppend.emplace_back(msText);
+		return std::exchange(m_nLastOffset, m_nLastOffset + msText.size() + 2);
 	}
 
 	auto TextDataDat::XorBytes(const std::span<std::uint8_t> spData, const std::uint8_t ucKey) -> void

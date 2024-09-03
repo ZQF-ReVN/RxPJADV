@@ -8,8 +8,8 @@ auto main(void) -> int
 {
 	try
 	{
-		ZQF::RxPJADV::Bin::TextDataDat text_dat{ "textdata.dat", 932 };
-		const auto json{ text_dat.SaveViaJson() };
+		ZQF::RxPJADV::Script::TextDataDat text_dat{ "textdata.dat" };
+		const auto json{ text_dat.SaveViaJson(932) };
 		ZQF::ZxJson::StoreViaFile("textdata.json", json, true, true);
 
 	}

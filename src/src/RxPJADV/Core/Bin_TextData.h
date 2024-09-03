@@ -3,36 +3,30 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <ZxMem/ZxMem.h>
 #include <ZxJson/JValue.h>
 
 
-namespace ZQF::RxPJADV::Bin
+namespace ZQF::RxPJADV::Script
 {
 	class TextDataDat
 	{
 	private:
-		std::size_t m_nEndIndex{};
-		std::size_t m_nEndOffset{};
-		std::vector<std::string> m_vcTextData;
-		std::unordered_map<std::size_t, std::size_t> m_mpOffsetToIndex;
-
-	private:
-		auto MapNext() -> std::size_t;
+		ZxMem m_TextDat;
+		std::size_t m_nLastOffset{};
+		std::vector<std::string> m_vcAppend;
 
 	public:
 		TextDataDat();
-		TextDataDat(const std::string_view msTextDataBinPath, const std::size_t nCodePage);
+		TextDataDat(const std::string_view msTextDataBinPath);
 
 	public:
-		auto operator[](const std::size_t nOffset) const -> const std::string&;
+		auto Save(const std::string_view msScenarioDatPath) const -> void;
+		auto SaveViaJson(const std::size_t nCodePage) const -> ZxJson::JValue;
 
 	public:
-		auto Load(const std::string_view msTextDataBinPath, const std::size_t nCodePage) -> void;
-		auto Save(const std::string_view msScenarioDatPath, const std::size_t nCodePage) const -> void;
-		auto SaveViaJson() const -> ZxJson::JValue;
-
-	public:
-		auto AddText(const std::string_view msText) -> std::uint32_t;
+		auto GetText(const std::size_t nOffset) const-> std::string_view;
+		auto AppendText(const std::string_view msText) -> std::size_t;
 
 	public:
 		static auto XorBytes(const std::span<std::uint8_t> spData, const std::uint8_t ucKey) -> void;

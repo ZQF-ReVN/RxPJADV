@@ -4,7 +4,7 @@
 #include <string_view>
 
 
-namespace ZQF::RxPJADV::Bin
+namespace ZQF::RxPJADV::Script
 {
 	class FileNameDat
 	{

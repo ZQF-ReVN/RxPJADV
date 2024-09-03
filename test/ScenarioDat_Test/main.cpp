@@ -7,7 +7,7 @@ auto main(void) -> int
 {
 	try
 	{
-		ZQF::RxPJADV::Bin::ScenarioDat scn_dat{ "scenario.dat" };
+		ZQF::RxPJADV::Script::ScenarioDat scn_dat{ "scenario.dat" };
 
 	}
 	catch (const std::exception& err)

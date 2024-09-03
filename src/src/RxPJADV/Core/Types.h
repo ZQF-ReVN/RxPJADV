@@ -57,6 +57,17 @@ namespace ZQF::RxPJADV::Script
 	};
 
 	using File_Name = PackV2::File_Name;
+
+	struct TextData_HDR
+	{
+		char aSignature[12];       // "PJADV_TF0001"
+		std::uint32_t nTextCount;
+
+		static auto SizeBytes() -> std::size_t
+		{
+			return sizeof(aSignature) + sizeof(nTextCount);
+		}
+	};
 #pragma pack(pop)
 }
 
