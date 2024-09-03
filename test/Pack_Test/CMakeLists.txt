@@ -1,5 +1,5 @@
 ﻿# Project Name
-project(ReVN_RxPJADV_ScenarioDat_Test)
+project(ReVN_RxPJADV_Pack_Test)
 
 # Test Project
 add_executable("${PROJECT_NAME}" "main.cpp")

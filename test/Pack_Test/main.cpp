@@ -1,13 +1,14 @@
 ﻿#include <print>
 #include <iostream>
-#include <RxPJADV/Core/Bin_FileName.h>
+#include <RxPJADV/Core/Pack_V2.h>
 
 
 auto main(void) -> int
 {
 	try
 	{
-		ZQF::RxPJADV::Bin::FileNameDat file_name_dat{ "filename.dat", 932 };
+		// ZQF::RxPJADV::PackV2::Export("archive.dat", "archive/");
+		ZQF::RxPJADV::PackV2::Import("archive/", "archive.dat.new");
 	}
 	catch (const std::exception& err)
 	{

@@ -1,15 +1,20 @@
-﻿#include <iostream>
+﻿#include <print>
+#include <iostream>
+#include <ZxJson/JIO.h>
+#include <RxPJADV/Core/Bin_TextData.h>
 
-#include <Rut/RxFile.h>
-#include <PJADV/Bin_TextData.h>
 
-
-int main()
+auto main(void) -> int
 {
-	PJADV::Bin::TextDataDat textdata_dat("textdata.bin");
-	std::string x = "123";
-	textdata_dat.AddText(std::move(x));
-	textdata_dat.Save("1.bin");
+	try
+	{
+		ZQF::RxPJADV::Bin::TextDataDat text_dat{ "textdata.dat", 932 };
+		const auto json{ text_dat.SaveViaJson() };
+		ZQF::ZxJson::StoreViaFile("textdata.json", json, true, true);
+
+	}
+	catch (const std::exception& err)
+	{
+		std::println(std::cerr, "std::exception: {}", err.what());
+	}
 }
-
-

@@ -1,18 +1,17 @@
-﻿#include <iostream>
+﻿#include <print>
+#include <iostream>
+#include <RxPJADV/Core/Bin_Scenario.h>
 
-#include <Rut/RxFile.h>
-#include <PJADV/Bin_Scenario.h>
 
-
-int main()
+auto main(void) -> int
 {
-	uint32_t uix = 0x6e64;
-	auto e = (((uix + 7) >> 3) + 3) & 0xFFFFFFFC;
-	PJADV::Bin::ScenarioDat scn_dat;
-	scn_dat.Load("scenario.dat");
-	scn_dat.ShowCommand(0x80000307);
+	try
+	{
+		ZQF::RxPJADV::Bin::ScenarioDat scn_dat{ "scenario.dat" };
 
-	int a = 0;
+	}
+	catch (const std::exception& err)
+	{
+		std::println(std::cerr, "std::exception: {}", err.what());
+	}
 }
-
-
