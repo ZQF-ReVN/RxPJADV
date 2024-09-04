@@ -49,7 +49,8 @@ namespace ZQF::RxPJADV::Script
 			}
 			break;
 
-			case 0x01010804:  // [select text]
+			case 0x01010203: // [select text]
+			case 0x01010804:
 			{
 				const auto select_text_offset = code_ptr[1];
 				if (select_text_offset)
@@ -108,7 +109,8 @@ namespace ZQF::RxPJADV::Script
 			}
 			break;
 
-			case 0x01010804:  // [select text]
+			case 0x01010203: // [select text]
+			case 0x01010804:
 			{
 				if (code_ptr[1]) { code_ptr[1] = fn_append_text("sel_tra"); }
 			}
