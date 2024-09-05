@@ -23,7 +23,8 @@ namespace ZQF::RxPJADV::Script
 		{
 			switch (code_ptr[0])
 			{
-			case 0x80000307:  // [text_box_text]
+			case 0x80000406: // [text_box_text]
+			case 0x80000307:
 			{
 				const auto name_text_offset = code_ptr[2];
 				const auto msg_text_offset = code_ptr[3];
@@ -114,7 +115,8 @@ namespace ZQF::RxPJADV::Script
 
 			switch (code_ptr[0])
 			{
-			case 0x80000307:  // [text_box_text]
+			case 0x80000406: // [text_box_text]
+			case 0x80000307:
 			{
 				if (code_ptr[2]) { code_ptr[2] = fn_append_text("chr_tra"); }
 				if (code_ptr[3]) { code_ptr[3] = fn_append_text("msg_tra"); }

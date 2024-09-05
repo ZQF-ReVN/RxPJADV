@@ -322,6 +322,19 @@ struct PAJ_FontData_List_Node
 	    07030080 83050000 BA000000 E6000000 07000000 00000300 01000000
 	    07030080 84050000 BA000000 28010000 08000000 00000300 01000000
 
+0x80000406 [text_box_text]
+	struct
+	{
+		dword: OP
+		dword: un
+		dword: foa_in_textdata_dat(chara name)
+		dword: foa_in_textdata_dat(msg text)
+		dword: un
+		dword: un
+	}
+    example:
+	    06040080 00000000 D0070000 9C5C0000 000003000 1000000
+
 0x01010101
 
 0x01010804 [select text][あるいは恋という名の魔法]
