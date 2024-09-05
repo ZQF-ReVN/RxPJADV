@@ -336,21 +336,29 @@ struct PAJ_FontData_List_Node
         04080101 EA000000 8C780000 00000000
 	
 0x01010203 [select text][プリンセスうぃっちぃず]
-	struct
+    struct
     {
       	dword: OP
 		dword: foa_in_text_data(select text)
 		dword: foa_in_scenario_dat
     }
     example:
-		03230001 22000000 10000000
-		03020101 323A0000 489B0000
-	
+        03230001 22000000 10000000
+        03020101 323A0000 489B0000
+
 0x01000D02 [chapter text]
 	[op:dword][foa_in_text_data(txt):dword]
 	020D0001 1C000000
 	
-0x03000303
+0x03000303 [save load comment][プリンセスうぃっちぃず]
+    struct
+    {
+      	dword: OP
+		dword: unknown
+		dword: foa_in_text_data(select text)
+    }
+    example:
+        030300030 4000030 5A711600
 	
 0xF0080102
 

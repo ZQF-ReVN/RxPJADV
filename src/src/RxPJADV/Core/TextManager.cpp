@@ -73,6 +73,18 @@ namespace ZQF::RxPJADV::Script
 				}
 			}
 			break;
+
+			case 0x03000303: // [save load comment]
+			{
+				const auto comment_text_offset = code_ptr[2];
+				if (comment_text_offset)
+				{
+					const auto comment_text_u8 = cvt.MBCSToUTF8(text_dat.GetText(comment_text_offset), nCodePage);
+					json_seq_array.push_back(idx);
+					json_msg_array.emplace_back(ZxJson::JObject_t{ { "com_org", comment_text_u8 }, { "com_tra", comment_text_u8 } });
+				}
+			}
+			break;
 			}
 		}
 
@@ -119,6 +131,12 @@ namespace ZQF::RxPJADV::Script
 			case 0x01000D02: // [chapter text]
 			{
 				if (code_ptr[1]) { code_ptr[1] = fn_append_text("chp_tra"); }
+			}
+			break;
+
+			case 0x03000303: // [save load comment]
+			{
+				if (code_ptr[2]) { code_ptr[2] = fn_append_text("com_tra"); }
 			}
 			break;
 			}
