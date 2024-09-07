@@ -4,6 +4,7 @@
 #include <ZxCvt/ZxCvt.h>
 #include <ZxFile/ZxFile.h>
 #include <ranges>
+#include <utility>
 #include <cassert>
 
 

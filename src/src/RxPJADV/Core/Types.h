@@ -1,5 +1,7 @@
 #pragma once
-#include <cstdio>
+#include <cstdint>
+#include <cstring>
+
 
 namespace ZQF::RxPJADV::PackV2
 {
@@ -32,7 +34,8 @@ namespace ZQF::RxPJADV::PackV2
 
 		static auto Make(const std::size_t nFileCnt) -> HDR_Info
 		{
-			PackV2::HDR_Info hdr_info{ .nFileCount{ static_cast<std::uint32_t>(nFileCnt) } };
+			PackV2::HDR_Info hdr_info{};
+			hdr_info.nFileCount = static_cast<std::uint32_t>(nFileCnt);
 			std::memcpy(hdr_info.aSignature, "GAMEDAT PAC2", 12);
 			return hdr_info;
 		}
