@@ -1,8 +1,8 @@
 #include "Bin_TextData.h"
 #include "Types.h"
-#include <ZxMem/ZxMem.h>
-#include <ZxCvt/ZxCvt.h>
-#include <ZxFile/ZxFile.h>
+#include <Zut/ZxMem.h>
+#include <Zut/ZxCvt.h>
+#include <Zut/ZxFile.h>
 #include <ranges>
 #include <utility>
 #include <cassert>

@@ -1,7 +1,7 @@
 #include "Bin_FileName.h"
 #include "Types.h"
-#include <ZxCvt/ZxCvt.h>
-#include <ZxMem/ZxMem.h>
+#include <Zut/ZxCvt.h>
+#include <Zut/ZxMem.h>
 
 
 namespace ZQF::RxPJADV::Script

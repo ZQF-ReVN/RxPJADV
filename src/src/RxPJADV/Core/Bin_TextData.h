@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <ZxMem/ZxMem.h>
-#include <ZxJson/JValue.h>
+#include <Zut/ZxMem.h>
+#include <Zut/ZxJson.h>
 
 
 namespace ZQF::RxPJADV::Script
