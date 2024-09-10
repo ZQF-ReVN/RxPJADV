@@ -4,7 +4,7 @@
 #include <string_view>
 
 
-namespace ZQF::RxPJADV::Script
+namespace ZQF::ReVN::RxPJADV::Script
 {
 	class FileNameDat
 	{
@@ -21,4 +21,4 @@ namespace ZQF::RxPJADV::Script
 	public:
 		auto operator[](std::size_t nIndex) -> const std::string&;
 	};
-}
+} // namespace ZQF::ReVN::RxPJADV::Script

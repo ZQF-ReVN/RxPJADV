@@ -4,7 +4,7 @@
 #include <Zut/ZxMem.h>
 
 
-namespace ZQF::RxPJADV::Script
+namespace ZQF::ReVN::RxPJADV::Script
 {
 	class ScenarioDat
 	{
@@ -26,4 +26,4 @@ namespace ZQF::RxPJADV::Script
 	public:
 		auto GetPtrs() -> const std::vector<std::uint32_t*>&;
 	};
-}
+}// namespace ZQF::ReVN::RxPJADV::Script

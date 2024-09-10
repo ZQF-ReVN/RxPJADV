@@ -1,11 +1,11 @@
 #include "Bin_Scenario.h"
-#include "Types.h"
+#include "PJADV_Struct.h"
 #include <Zut/ZxFile.h>
 #include <ranges>
 #include <format>
 
 
-namespace ZQF::RxPJADV::Script
+namespace ZQF::ReVN::RxPJADV::Script
 {
 	ScenarioDat::ScenarioDat()
 	{
@@ -34,7 +34,7 @@ namespace ZQF::RxPJADV::Script
 		{
 			if (cmd_ptr > max_ptr) { throw std::runtime_error("RxPJADV::Bin::ScenarioDat::Load(): scan cmd error!"); }
 
-			const auto cur_cmd_ptr = reinterpret_cast<Script::OPCode*>(cmd_ptr);
+			const auto cur_cmd_ptr = reinterpret_cast<Struct::Script::OPCode*>(cmd_ptr);
 			cmd_ptr += (cur_cmd_ptr->ucCount == 0) ? (4) : (cur_cmd_ptr->ucCount * 4);
 			m_vcCodePtr.push_back(reinterpret_cast<std::uint32_t*>(cur_cmd_ptr));
 		}
@@ -69,4 +69,4 @@ namespace ZQF::RxPJADV::Script
 	{
 		return m_vcCodePtr;
 	}
-}
+} // namespace ZQF::ReVN::RxPJADV::Script

@@ -11,11 +11,11 @@ endif()
 
 # Set Source File Path
 list(APPEND ReVN_RxPJADV_Core_Src_Files
-    "src/RxPJADV/Core/Pack_V2.cpp"
-    "src/RxPJADV/Core/Bin_TextData.cpp"
-    "src/RxPJADV/Core/Bin_Scenario.cpp"
-    "src/RxPJADV/Core/Bin_FileName.cpp"
-    "src/RxPJADV/Core/TextManager.cpp")
+    "src/ReVN/RxPJADV/Core/Pack_V2.cpp"
+    "src/ReVN/RxPJADV/Core/Bin_TextData.cpp"
+    "src/ReVN/RxPJADV/Core/Bin_Scenario.cpp"
+    "src/ReVN/RxPJADV/Core/Bin_FileName.cpp"
+    "src/ReVN/RxPJADV/Core/TextManager.cpp")
 
 # Set Library
 add_library(ReVN_RxPJADV_Core ${ReVN_RxPJADV_Core_Src_Files})

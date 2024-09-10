@@ -3,11 +3,11 @@
 #include <string_view>
 #include <Zut/ZxFS.h>
 #include <Zut/ZxCvt.h>
-#include <RxPJADV/Core/Bin_Scenario.h>
-#include <RxPJADV/Core/Bin_TextData.h>
+#include <ReVN/RxPJADV/Core/Bin_Scenario.h>
+#include <ReVN/RxPJADV/Core/Bin_TextData.h>
 
 
-namespace ZQF::RxPJADV::Script
+namespace ZQF::ReVN::RxPJADV::Script
 {
 	auto TextManager::Export(const std::string_view msTextDataBinPath, const std::string_view msScenarioDataBinPath, const std::string_view msMsgJsonPath, const std::string_view msSeqJsonPath, const std::size_t nCodePage) -> void
 	{
@@ -146,5 +146,5 @@ namespace ZQF::RxPJADV::Script
 		text_dat.Save(std::string{ msTextDataBinPath }.append(".new"));
 		scen_dat.Save(std::string{ msScenarioDataBinPath }.append(".new"));
 	}
-}
+} // namespace ZQF::ReVN::RxPJADV::Script
 

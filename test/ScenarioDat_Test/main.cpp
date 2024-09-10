@@ -1,13 +1,15 @@
 ﻿#include <print>
 #include <iostream>
-#include <RxPJADV/Core/Bin_Scenario.h>
+#include <ReVN/RxPJADV/Core/Bin_Scenario.h>
+
+namespace RxPJADV { using namespace ZQF::ReVN::RxPJADV; }
 
 
 auto main(void) -> int
 {
 	try
 	{
-		ZQF::RxPJADV::Script::ScenarioDat scn_dat{ "scenario.dat" };
+		RxPJADV::Script::ScenarioDat scn_dat{ "scenario.dat" };
 
 	}
 	catch (const std::exception& err)

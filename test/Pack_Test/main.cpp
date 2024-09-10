@@ -1,14 +1,16 @@
 ﻿#include <print>
 #include <iostream>
-#include <RxPJADV/Core/Pack_V2.h>
+#include <ReVN/RxPJADV/Core/Pack_V2.h>
+
+namespace RxPJADV { using namespace ZQF::ReVN::RxPJADV; }
 
 
 auto main(void) -> int
 {
 	try
 	{
-		// ZQF::RxPJADV::PackV2::Export("archive.dat", "archive/");
-		ZQF::RxPJADV::PackV2::Import("archive/", "archive.dat.new");
+		// RxPJADV::PackV2::Export("archive.dat", "archive/");
+		RxPJADV::PackV2::Import("archive/", "archive.dat.new");
 	}
 	catch (const std::exception& err)
 	{

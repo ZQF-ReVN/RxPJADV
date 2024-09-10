@@ -7,7 +7,7 @@
 #include <Zut/ZxJson.h>
 
 
-namespace ZQF::RxPJADV::Script
+namespace ZQF::ReVN::RxPJADV::Script
 {
 	class TextDataDat
 	{
@@ -31,5 +31,4 @@ namespace ZQF::RxPJADV::Script
 	public:
 		static auto XorBytes(const std::span<std::uint8_t> spData, const std::uint8_t ucKey) -> void;
 	};
-
-}
+} // namespace ZQF::ReVN::RxPJADV::Script

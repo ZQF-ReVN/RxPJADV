@@ -1,5 +1,5 @@
 #include "Bin_TextData.h"
-#include "Types.h"
+#include "PJADV_Struct.h"
 #include <Zut/ZxMem.h>
 #include <Zut/ZxCvt.h>
 #include <Zut/ZxFile.h>
@@ -8,7 +8,7 @@
 #include <cassert>
 
 
-namespace ZQF::RxPJADV::Script
+namespace ZQF::ReVN::RxPJADV::Script
 {
 	TextDataDat::TextDataDat()
 	{
@@ -27,8 +27,8 @@ namespace ZQF::RxPJADV::Script
 		ZxFile ofs{ msScenarioDatPath, ZxFile::OpenMod::WriteForce };
 
 		ofs << std::span{ "PJADV_TF0001", 12 };
-		ofs << static_cast<std::uint32_t>(m_vcAppend.size() + m_TextDat.Ptr<Script::TextData_HDR*>()->nTextCount);
-		ofs << std::span{ m_TextDat.Ptr() + Script::TextData_HDR::SizeBytes(), m_TextDat.SizeBytes() - Script::TextData_HDR::SizeBytes() };
+		ofs << static_cast<std::uint32_t>(m_vcAppend.size() + m_TextDat.Ptr<Struct::Script::TextData_HDR*>()->nTextCount);
+		ofs << std::span{ m_TextDat.Ptr() + Struct::Script::TextData_HDR::SizeBytes(), m_TextDat.SizeBytes() - Struct::Script::TextData_HDR::SizeBytes() };
 
 		for (const auto& text : m_vcAppend)
 		{
@@ -42,8 +42,8 @@ namespace ZQF::RxPJADV::Script
 		ZxCvt cvt;
 		ZxJson::JArray_t texts;
 
-		const auto text_cnt{ m_TextDat.Ptr<Script::TextData_HDR*>()->nTextCount };
-		auto text_ptr{ m_TextDat.Ptr<char*>() + Script::TextData_HDR::SizeBytes() };
+		const auto text_cnt{ m_TextDat.Ptr<Struct::Script::TextData_HDR*>()->nTextCount };
+		auto text_ptr{ m_TextDat.Ptr<char*>() + Struct::Script::TextData_HDR::SizeBytes() };
 		for ([[maybe_unused]] const auto idx : std::views::iota(0u, text_cnt))
 		{
 			const std::string_view text_sv{ text_ptr };
@@ -84,4 +84,4 @@ namespace ZQF::RxPJADV::Script
 			key += 0x5C;
 		}
 	}
-}
+} // namespace ZQF::ReVN::RxPJADV::Script

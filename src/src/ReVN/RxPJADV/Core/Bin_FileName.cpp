@@ -1,10 +1,10 @@
 #include "Bin_FileName.h"
-#include "Types.h"
+#include "PJADV_Struct.h"
 #include <Zut/ZxCvt.h>
 #include <Zut/ZxMem.h>
 
 
-namespace ZQF::RxPJADV::Script
+namespace ZQF::ReVN::RxPJADV::Script
 {
 	FileNameDat::FileNameDat()
 	{
@@ -24,7 +24,7 @@ namespace ZQF::RxPJADV::Script
 		bin_mem.PosInc(12);
 
 		const auto name_count{ bin_mem.Get<std::uint32_t>() };
-		const auto name_table_sp{ bin_mem.SpanCur<Script::File_Name>() };
+		const auto name_table_sp{ bin_mem.SpanCur<Struct::Script::File_Name>() };
 		if (name_count != name_table_sp.size()) { throw std::runtime_error("RxPJADV::Bin::FileNameDat::Load(): file name count mismatch!"); }
 
 		ZxCvt cvt;
@@ -38,4 +38,4 @@ namespace ZQF::RxPJADV::Script
 	{
 		return m_vcName.operator[](nIndex);
 	}
-}
+} // namespace ZQF::ReVN::RxPJADV::Script
