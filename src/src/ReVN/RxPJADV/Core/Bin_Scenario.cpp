@@ -32,10 +32,14 @@ namespace ZQF::ReVN::RxPJADV::Script
 		auto max_ptr{ m_amScenario.PtrCur() + m_amScenario.SizeBytesCur() };
 		while (cmd_ptr != max_ptr)
 		{
-			if (cmd_ptr > max_ptr) { throw std::runtime_error("RxPJADV::Bin::ScenarioDat::Load(): scan cmd error!"); }
+			if (cmd_ptr > max_ptr) 
+			{ 
+				throw std::runtime_error("RxPJADV::Bin::ScenarioDat::Load(): scan cmd error!");
+			}
 
 			const auto cur_cmd_ptr = reinterpret_cast<Struct::Script::OPCode*>(cmd_ptr);
-			cmd_ptr += (cur_cmd_ptr->ucCount == 0) ? (4) : (cur_cmd_ptr->ucCount * 4);
+			const auto cmd_cnt = (cur_cmd_ptr->ucCount > 0x7F) ? (0) : cur_cmd_ptr->ucCount;
+			cmd_ptr += (cmd_cnt == 0) ? (4) : (cmd_cnt * 4);
 			m_vcCodePtr.push_back(reinterpret_cast<std::uint32_t*>(cur_cmd_ptr));
 		}
 
