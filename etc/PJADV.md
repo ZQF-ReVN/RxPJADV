@@ -407,7 +407,32 @@ public:
 
 03230001 00000000 1BB11200
 
-0x0300000B [msg font][太陽のプロミア]
+0x0F002000F [font static global]
+
+0x80030B15 [log font]
+        150B0380 -> OP
+        9D000000 -> Text Box X
+        62030000 -> Text Box Width
+        17000000 -> Text Char Width 
+        24000000 -> Text Line Space
+        17000000 -> Text Char Heigh
+        01000000 -> Bind Font ID
+        FFFFFF00
+        B57FFF00
+        16000000 -> Character Name width
+        21000000 -> Character Name line space
+        12000000 -> Character Name heigh
+        01000000 -> Bind Font ID
+        FFFFFF00
+        B57FFF00
+        3C000000
+        14000000
+        35000000
+        24000000
+        FFFF1000
+        00000000
+
+0x0300000B [create font / msg fon][太陽のプロミア]
         0B000003  -> opcode
         00000000  -> font id
         F1000000  -> text box x
@@ -419,15 +444,37 @@ public:
         1E000000  -> text line space
         FFFFFF00  -> unknown
         01000000  -> font type // 1,2,3,4 -> GDI | other -> fontdata.xx
-        
-0x03001804 [ruby font]
-        04180003
+
+0x03001003 [create global font][太陽のプロミア]
+        03100003 -> op
+        01000000 -> font type
+        18000000 -> font heigh
+
+0x03001103 [font set ??]
+
+0x03001206 [font set ??]
+
+0x03001303 [unkonwn font]
+
+0x03001403 [set font cache flag]
+
+0x03001503 [font set ??]
+
+0x03001704 [font set pos]
+        04170003 -> op
+        00000000 -> box X
+        00000000 -> box Y
+
+0x03001606 [font set ??]
+
+0x03001804 [ruby font / bind font]
+        04180003 -> op
         01000000 -> exist font id
         0C000000 -> char heigh
         0E000000 -> ruby text distance to target text
 
 0xF003011B [log font]
-        1B0103F0
+        1B0103F0 -> op
         7A000000
         12000000
         14040000
@@ -454,6 +501,7 @@ public:
         00001000
         00000000
         00000000
+
 ```
 
 
