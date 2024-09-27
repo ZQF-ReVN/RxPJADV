@@ -274,6 +274,28 @@ struct PAJ_FontData_List_Node
   uint32_t uiFontRect_Half;
 };
 
+// 0100000           0
+// ^^^^^^^__val_idx  ^__stack_id
+struct StackVal
+{
+public:
+	std::uint32_t m_nVal;
+
+public:
+	// which element in the stack
+	auto GetValIDX() const -> std::size_t
+	{
+		auto val_idx = m_nVal & 0x0FFFFFFF;
+		if ((m_nVal & 0x08000000) != 0) { val_idx |= 0xF0000000; }
+		return val_idx;
+	}
+
+	// which stack
+	auto GetStackID() const -> std::size_t
+	{
+		return nStackVal >> 28;
+	}
+}
 ```
 
 
@@ -384,6 +406,54 @@ struct PAJ_FontData_List_Node
 0xF0080601
 
 03230001 00000000 1BB11200
+
+0x0300000B [msg font][太陽のプロミア]
+        0B000003  -> opcode
+        00000000  -> font id
+        F1000000  -> text box x
+        04020000  -> text box y
+        2C010000  -> text box width
+        1E000000  -> text box heigh
+        1E000000  -> char heigh
+        1E000000  -> char width
+        1E000000  -> text line space
+        FFFFFF00  -> unknown
+        01000000  -> font type // 1,2,3,4 -> GDI | other -> fontdata.xx
+        
+0x03001804 [ruby font]
+        04180003
+        01000000 -> exist font id
+        0C000000 -> char heigh
+        0E000000 -> ruby text distance to target text
+
+0xF003011B [log font]
+        1B0103F0
+        7A000000
+        12000000
+        14040000
+        AA000000
+        04000000
+        AD000000
+        76000000
+        0B000000
+        1C000000 -> character name char heigh
+        1E000000 -> character name char width
+        1E000000 -> character name line space
+        0AAAFF00
+        0AAAFF00
+        01000100
+        FFFF1000
+        76000000
+        36000000
+        1C000000 -> msg text char heigh
+        1E000000 -> msg text char width
+        2B000000 -> msg text line space
+        FFFFFF00
+        FFFFFF00
+        01000100
+        00001000
+        00000000
+        00000000
 ```
 
 
